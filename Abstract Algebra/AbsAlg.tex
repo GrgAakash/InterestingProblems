@@ -1,0 +1,215 @@
+\documentclass[letter]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb,amsrefs,mathtools,amsthm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage[all]{xy}
+\usepackage{tikz}
+\usetikzlibrary{snakes,patterns}
+\usetikzlibrary{decorations.pathreplacing,calligraphy}
+\usepackage{caption}
+\usepackage{cancel}
+%\usepackage[T1]{fontenc}
+
+\usepackage[bookmarksnumbered, colorlinks, plainpages]{hyperref}
+\hypersetup{colorlinks=true,linkcolor=red, anchorcolor=green, citecolor=cyan, urlcolor=blue, filecolor=magenta, pdftoolbar=true}
+\usepackage[capitalise]{cleveref}
+
+\newtheorem*{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{Competition}[theorem]{Contest}
+
+
+\newcommand{\AK}[1]{\marginpar{
+	\begin{flushleft}{\color{red}\tiny #1}\end{flushleft}}}
+
+%\newcommand{\kc}[1]{{\color[rgb]{1,0,0}#1
+%\newcommand{\blue}[1]{{\color[rgb]{0,0,1}#1}}
+
+\DeclareMathOperator{\atan2}{atan2}
+\title[\ \ Draft of \today]{Abstract Algebra}
+
+\author[Anon \ \ Draft of \today]{\textbf{}DPGag}
+
+
+%red, green, blue, cyan, magenta, yellow, black, gray, white, darkgray, lightgray, brown, lime, olive, orange, pink, purple, teal, violet.
+
+\date{Draft of \today}
+%00A05 Mathematics in general
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{\textbf{Introduction}}
+Theoretical problems primarily from \cite{rotman1995groups}.\\
+Computational problems primarily from \cite{moon2014homework}.See the url in the bibtex to find the actual uploads of the homework.
+Contest problems are from various sources.\\
+\section{\textbf{Groups and Homomorphism}}
+\subsection{\text{Semigroups} $\oplus$ \text{Groups}}
+
+\begin{problem} (1.23)
+If $G$ is a group and $a_1, a_2, \dots, a_n \in G$, then
+$$(a_1 a_2 \cdots a_n)^{-1} = a_n^{-1} a_{n-1}^{-1} \cdots a_1^{-1}.$$
+Conclude that if $n \geq 0$, then
+$$(a^{-1})^n =  (a^n)^{-1}.$$
+\end{problem}
+\begin{proof}
+Let $P(n)$:$$(a_1 a_2 \cdots a_n)^{-1} = a_n^{-1} a_{n-1}^{-1} \cdots a_1^{-1},~~~~~ n\in \mathbb{N}$$\\
+
+\AK{Strategy: Involves $n \in \mathbb{N}$ so induction.}
+
+$P(1)$: $(a_1)^{-1}=a_1^{-1}$ is true.\\
+
+Assume $P(k)$: $(a_1 \cdots a_k)^{-1} = a_k^{-1} \cdots a_1^{-1}$.\\
+
+Then
+$$
+(a_1 \cdots a_{k+1})^{-1} = a_{k+1}^{-1}(a_1 \cdots a_k)^{-1} = a_{k+1}^{-1}a_k^{-1} \cdots a_1^{-1}
+$$\\
+
+Thus $P(n)$ is true for all $n \in \mathbb{N}$.
+
+Now, if $n\geq0$ , let $a_1=a_2=...=a_n=a$\\
+
+Then, we get $(a^n)^{-1}=(a^{-1})^n$
+\end{proof}
+\begin{problem}(1.26)
+    A group in which $x^2=e$ for every $x$ must be abelian.
+\end{problem}
+\begin{proof}
+    $x,y \in G \implies x^2y^2=e\implies xy=x^{-1}y^{-1}$\\
+    \AK{Strategy:Using the idea of $ab^{-1}=e\implies a=b$ along with the given information which is not there for no reason.$x^2=e\implies x=x^{-1}$ so we can definitely try leveraging this property.}
+    Now,
+    $(xy)(yx)^{-1}=(xy)(x^{-1}y^{-1})=(xy)(xy)=e \implies xy=yx$
+\end{proof}
+
+
+\begin{problem} (1.27)\\
+
+(i) Let $G$ be a finite abelian group containing no elements $a \ne e$ with $a^2 = e$. Evaluate 
+$$
+a_1 a_2 \cdots a_n,
+$$ 
+where $a_1, a_2, \dots, a_n$ is a list, with no repetitions, of all the elements of $G$.\\
+
+(ii) Prove Wilson's Theorem: If $p$ is prime, then
+$$
+(p - 1)! \equiv -1 \pmod{p}.
+$$ 
+\end{problem}
+\begin{proof}
+(i)
+    Claim: $a_1...a_n=e$\\
+
+    \textbf{For $n$ being odd}, $\forall a_i \in G, \exists a_i ^{-1} \in G ,i \in \{1,..,n\}$. As the group is abelian and finite so only one element say $a_k \in G, k \in \{1,..,n\}$ remains. Now it is clear that $a_k=a_k^{-1}\implies a_k =e$ is the only possibility.\\
+    Thus, $a_1...a_n=e$
+    
+    \AK{Strategy:For P3 (i)~~Let's start with small cases??? For $Z_n$ when $n$ is odd, the evaluation yields $0$, when $n$ is even, the evaluation yields $1,2,3,...$ The even case also seems to have an element whose order is $2$ which violates the condition. The odd case doesn't.So the naive conjecture seems that the evaluation would yield the identity element.}
+    
+    \textbf{For $n$ being even},
+    as each element is distinct and each of their inverse is unique, so we get, for $e \in G, \exists a_k \in G, k\in \{1,..,n\}$ such that $e a_k =e \implies a_k =e$ but $e$ is unique so there is no group with order even satisfying the given conditions.\\
+    
+    Or we can use \textbf{Cauchy's theorem}, Let $G$ be a finite group and $p$ be a prime. If $p$ divides the order of $G$, then $G$ has a non identity element of order $p$.\\
+    If $|G|$ was even then Cauchy's theorem implies that there is a non identity element of order $2$ which contradicts the hypothesis.\\
+
+(ii)~~ We have $U(p)=\{1,2,...,p-1\}$. $U(p)$ is a finite abelian group. Now, each element of $U(p)$ has an inverse. $|U(p)|$ is even so there is a non identity element of order $2$.\\
+
+For some $x \in U(p),x^2= 1 
+ \implies x=x^{-1}\implies x=1,-1(=p-1)\implies x^{-1}=-1(=p-1),1$.
+
+ As, we already know for a group with order even, eventually after pairing and cancellation,  $1 \cdot y=1\implies y=-1=p-1$.
+
+
+$1.2....(p-1)=1.(p-1)$
+ Thus,
+ $$(p-1)! = p-1 = -1 $$
+ 
+
+ \AK{We ignore the repeated use of $\equiv (\mod p)$ as it is clear that we are working in $\mod p$ environment due to the way $U(p)$ is defined.} 
+
+\end{proof}
+
+\begin{problem}
+  Show that $\alpha : \mathbb{Z}_{11}\to \mathbb{Z}_{11}$, defined by $\alpha(x)=4x^2-3x^7$, is a permutation of $\mathbb{Z}_{11}$, 
+  and write is as a product of disjoint cycles. What is the parity of $\alpha$? What about $\alpha^{-1}$?
+\end{problem}
+\begin{proof}
+  
+\end{proof}
+\begin{Competition}
+Is there a finite abelian group G such that the product of all the orders of its elements is $2^{2009}$?
+\end{Competition}
+\begin{proof}
+  
+\end{proof}
+
+
+
+
+\subsection{Homomorphisms}
+
+
+
+\section{\textbf{The Isomorphism Theorems}}
+\subsection{Subgroups}
+
+\subsection{Lagrange's Theorem}
+
+\subsection{Cyclic Subgroups}
+
+\subsection{Normal Subgroups}
+
+\subsection{Quotient Subgroups}
+
+\subsection{The Isomorphism Theorems}
+
+\subsection{Correspondence Theorem}
+
+\subsection{Direct Product}
+
+
+
+
+
+
+
+
+
+\begin{bibdiv}
+\begin{biblist}
+\bib{rotman1995groups}{book}{
+  title={An Introduction to the Theory of Groups},
+  author={Rotman, Joseph J.},
+  edition={4},
+  series={Graduate Texts in Mathematics},
+  publisher={Springer New York, NY},
+  year={1995},
+  isbn={978-0-387-94285-8, 978-1-4612-4176-8},
+  doi={10.1007/978-1-4612-4176-8},
+  note={Originally published by Allyn \& Bacon, 1965, 1973 and 1984}
+}
+
+\bib{moon2014homework}{misc}{
+  author={Moon, Han-Bom},
+  title={Homework},
+  year={2014},
+  howpublished={\url{https://www.hanbommoon.net/wp-content/uploads/2014/01/}},
+  note={MATH 3005}
+}
+
+
+
+\end{biblist}
+\end{bibdiv}
+\vfill
+
+\end{document}
